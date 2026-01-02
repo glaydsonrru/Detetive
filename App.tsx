@@ -136,23 +136,52 @@ const App: React.FC = () => {
   if (currentScreen === Screen.HOME) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-950">
-        <div className="text-center space-y-6 mb-16 animate-in fade-in zoom-in duration-500">
-          <div className="w-24 h-24 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl mx-auto flex items-center justify-center shadow-[0_0_40px_rgba(220,38,38,0.2)] border border-white/10">
-            <i className="fa-solid fa-clipboard-list text-5xl text-white"></i>
+        <div className="relative mb-12 animate-in fade-in zoom-in duration-700">
+          {/* Ícone inspirado na imagem enviada */}
+          <div className="w-48 h-48 bg-gradient-to-br from-orange-500 via-red-600 to-red-800 rounded-[40px] flex items-center justify-center app-icon-shadow border border-white/20 relative overflow-hidden">
+            {/* Clipboard background pattern */}
+            <div className="absolute top-2 w-16 h-4 bg-slate-900/30 rounded-full"></div>
+            
+            <div className="relative">
+              <i className="fa-solid fa-clipboard text-8xl text-white/90"></i>
+              <div className="absolute inset-0 flex items-center justify-center mt-2 mr-2">
+                <i className="fa-solid fa-magnifying-glass text-4xl text-slate-900 rotate-12 drop-shadow-lg"></i>
+              </div>
+            </div>
+            
+            {/* Player circles simulation */}
+            <div className="absolute top-10 flex gap-1">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="w-2.5 h-2.5 rounded-full border border-white/20" style={{ backgroundColor: PLAYER_COLORS[i % PLAYER_COLORS.length] }}></div>
+              ))}
+            </div>
           </div>
-          <div>
-            <h1 className="text-4xl font-black tracking-tighter text-white uppercase italic leading-none">Detetive</h1>
-            <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] mt-2">Planilha de Dedução</p>
+
+          {/* Cachimbinho decorativo flutuante (opcional, via FontAwesome) */}
+          <div className="absolute -bottom-4 -left-6 bg-slate-900 p-3 rounded-full border border-slate-800 rotate-[-15deg] shadow-lg">
+             <i className="fa-solid fa-smoking text-amber-500 text-2xl"></i>
           </div>
+        </div>
+
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-black tracking-tighter text-white italic drop-shadow-2xl">
+            Detective <span className="text-orange-500 block sm:inline">Sheet</span>
+          </h1>
+          <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mt-3 opacity-60">Planilha de Dedução Digital</p>
         </div>
         
         <div className="w-full max-w-xs space-y-4">
           <button 
             onClick={startNewGame}
-            className="w-full bg-white text-black font-black py-4 px-8 rounded-2xl flex items-center justify-center gap-3 hover:bg-red-600 hover:text-white transition-all active:scale-95 shadow-xl"
+            className="w-full bg-white text-black font-black py-4 px-8 rounded-2xl flex items-center justify-center gap-3 hover:bg-orange-500 hover:text-white transition-all active:scale-95 shadow-2xl"
           >
-            <i className="fa-solid fa-plus text-sm"></i>
-            <span className="tracking-widest text-sm uppercase">Novo Jogo</span>
+            <i className="fa-solid fa-play text-xs"></i>
+            <span className="tracking-[0.2em] text-sm uppercase">Novo Jogo</span>
+          </button>
+          
+          <button className="w-full bg-slate-900/50 text-slate-400 font-bold py-3 px-8 rounded-2xl flex items-center justify-center gap-3 border border-slate-800 hover:text-white transition-all">
+            <i className="fa-solid fa-clock-rotate-left text-xs"></i>
+            <span className="text-xs uppercase tracking-widest">Histórico</span>
           </button>
         </div>
       </div>
@@ -173,7 +202,7 @@ const App: React.FC = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Quantidade de Jogadores</label>
-              <span className="text-red-500 font-black text-xl">{playerCount}</span>
+              <span className="text-orange-500 font-black text-xl">{playerCount}</span>
             </div>
             <div className="grid grid-cols-4 gap-3">
               {[3, 4, 5, 6].map(num => (
@@ -182,7 +211,7 @@ const App: React.FC = () => {
                   onClick={() => setPlayerCount(num)}
                   className={`py-5 rounded-2xl font-black border-2 transition-all ${
                     playerCount === num 
-                    ? 'bg-red-600 border-red-500 text-white shadow-lg scale-105' 
+                    ? 'bg-orange-600 border-orange-500 text-white shadow-lg scale-105' 
                     : 'bg-slate-900 border-slate-800 text-slate-500'
                   }`}
                 >
@@ -194,7 +223,7 @@ const App: React.FC = () => {
 
           <div className="p-6 bg-slate-900/50 rounded-3xl border border-slate-800/50">
             <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
-              <i className="fa-solid fa-circle-info mr-2 text-red-500"></i>
+              <i className="fa-solid fa-circle-info mr-2 text-orange-500"></i>
               Defina a ordem conforme os jogadores estão sentados na mesa, começando por você. Isso ajuda na lógica de exclusão automática.
             </p>
           </div>
@@ -202,7 +231,7 @@ const App: React.FC = () => {
 
         <button 
           onClick={handleSetupSubmit}
-          className="w-full bg-red-600 text-white font-black py-5 rounded-2xl tracking-[0.2em] text-sm uppercase shadow-2xl active:scale-95 transition-all mt-auto"
+          className="w-full bg-orange-600 text-white font-black py-5 rounded-2xl tracking-[0.2em] text-sm uppercase shadow-2xl active:scale-95 transition-all mt-auto"
         >
           Iniciar Investigação
         </button>
@@ -211,21 +240,21 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="h-screen bg-slate-950 flex flex-col select-none overflow-hidden">
+    <div className="h-screen bg-slate-950 flex flex-col select-none overflow-hidden font-sans">
       <header className="bg-slate-900 border-b border-slate-700 h-14 shrink-0 z-40 px-4 flex items-center justify-between shadow-lg">
         <div className="flex items-center gap-3">
           <button onClick={() => setCurrentScreen(Screen.HOME)} className="text-slate-500 hover:text-white transition-colors">
             <i className="fa-solid fa-chevron-left"></i>
           </button>
           <div className="flex flex-col">
-            <h2 className="font-black text-[10px] tracking-widest text-white uppercase leading-none">Detetive Digital</h2>
-            <span className="text-[8px] font-bold text-red-500 uppercase mt-1 tracking-tighter italic">Investigação Ativa</span>
+            <h2 className="font-black text-[10px] tracking-widest text-white uppercase leading-none">Detective Sheet</h2>
+            <span className="text-[8px] font-bold text-orange-500 uppercase mt-1 tracking-tighter italic">Investigação Ativa</span>
           </div>
         </div>
         <button 
           onClick={() => setShowDeduction(!showDeduction)}
           className={`px-4 py-2 rounded-xl font-black text-[9px] tracking-widest uppercase transition-all shadow-md flex items-center gap-2
-            ${showDeduction ? 'bg-red-600 text-white ring-2 ring-red-400/20' : 'bg-slate-800 text-slate-400'}
+            ${showDeduction ? 'bg-orange-600 text-white ring-2 ring-orange-400/20' : 'bg-slate-800 text-slate-400'}
           `}
         >
           <i className="fa-solid fa-magnifying-glass-chart"></i>
@@ -259,9 +288,9 @@ const App: React.FC = () => {
 
       {showDeduction && (
         <div className="fixed inset-x-0 bottom-32 z-50 px-4 animate-in slide-in-from-bottom-6 duration-300">
-          <div className="bg-slate-900/95 backdrop-blur-xl border-2 border-red-600/50 rounded-3xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+          <div className="bg-slate-900/95 backdrop-blur-xl border-2 border-orange-600/50 rounded-3xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-[10px] font-black text-red-500 tracking-widest uppercase italic">Possíveis no Envelope</h4>
+              <h4 className="text-[10px] font-black text-orange-500 tracking-widest uppercase italic">Possíveis no Envelope</h4>
               <i className="fa-solid fa-user-secret text-slate-700"></i>
             </div>
             <div className="grid grid-cols-3 gap-2">

@@ -1,5 +1,5 @@
 {
-  "name": "Planilha Mestra Detetive",
+  "name": "Detective Sheet",
   "description": "Uma planilha de dedução digital para o jogo de tabuleiro Detetive. Acompanhe suspeitos, armas e locais com marcação interativa e lógica de dedução automática.",
   "requestFramePermissions": []
 }
